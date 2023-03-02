@@ -4,4 +4,6 @@
     <string name="student_email">Student Email</string>
     <string name="save">Save</string>
     <string name="clear">Clear</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 </resources>
