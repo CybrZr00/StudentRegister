@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import uk.co.digitaljeeves.studentregister.databinding.ActivityMainBinding
 import uk.co.digitaljeeves.studentregister.db.Student
 import uk.co.digitaljeeves.studentregister.db.StudentDatabase
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var saveButton: Button
@@ -25,13 +27,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var selectedStudent: Student
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        binding.apply {
+            nameEditText = etName
+            emailEditText = etEmail
+            saveButton = btnSave
+            clearButton = btnClear
+            studentRecyclerView = rvStudents
+        }
 
-        nameEditText = findViewById(R.id.etName)
-        emailEditText = findViewById(R.id.etEmail)
-        saveButton = findViewById(R.id.btnSave)
-        clearButton = findViewById(R.id.btnClear)
-        studentRecyclerView = findViewById(R.id.rvStudents)
 
         val dao = StudentDatabase.getInstance(application).studentDao()
         val factory = StudentViewModelFactory(dao)
@@ -115,7 +121,18 @@ class MainActivity : AppCompatActivity() {
 
             nameEditText.setText(student.name)
             emailEditText.setText(student.email)
-        }else{
+
+        }
+        else if(isListItemSelected && selectedStudent.id != student.id){
+            selectedStudent = student
+            saveButton.text = getString(R.string.update)
+            clearButton.text = getString(R.string.delete)
+            isListItemSelected = true
+
+            nameEditText.setText(student.name)
+            emailEditText.setText(student.email)
+        }
+        else{
             saveButton.text = getString(R.string.save)
             clearButton.text = getString(R.string.clear)
             isListItemSelected = false

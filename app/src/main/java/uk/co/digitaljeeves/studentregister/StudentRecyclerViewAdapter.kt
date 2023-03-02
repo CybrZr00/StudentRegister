@@ -5,14 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import uk.co.digitaljeeves.studentregister.databinding.ListItemBinding
 import uk.co.digitaljeeves.studentregister.db.Student
 
 class StudentRecyclerViewAdapter(private val clickListener:(Student)->Unit) : RecyclerView.Adapter<StudentViewHolder>() {
     private val studentList = ArrayList<Student>()
+    private lateinit var binding:ListItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+
+
         val layoutInflater = LayoutInflater.from(parent.context)
-        val listItem = layoutInflater.inflate(R.layout.list_item, parent, false)
-        return StudentViewHolder(listItem)
+        binding = ListItemBinding.inflate(layoutInflater, parent, false)
+
+        return StudentViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -28,14 +33,18 @@ class StudentRecyclerViewAdapter(private val clickListener:(Student)->Unit) : Re
     }
 }
 
-class StudentViewHolder(private val view: View):RecyclerView.ViewHolder(view){
+class StudentViewHolder(private val binding: ListItemBinding):RecyclerView.ViewHolder(binding.root){
+
     fun bind(student: Student, clickListener:(Student)->Unit){
-        val nameTextView = view.findViewById<TextView>(R.id.tvName)
-        val emailTextView = view.findViewById<TextView>(R.id.tvEmail)
-        nameTextView.text = student.name
-        emailTextView.text = student.email
-        view.setOnClickListener{
-            clickListener(student)
+        binding.apply {
+            val nameTextView = tvName
+            val emailTextView = tvEmail
+            nameTextView.text = student.name
+            emailTextView.text = student.email
+            root.setOnClickListener{
+                clickListener(student)
+            }
         }
+
     }
 }
