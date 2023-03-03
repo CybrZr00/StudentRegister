@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:orientation="vertical"
-    android:layout_margin="15dp"
     tools:context=".MainActivity">
 
 
@@ -14,18 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/student_name"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="@string/student_name"
         android:textSize="24sp" />
+
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/student_email"
         android:inputType="textEmailAddress"
         android:text=""
-        android:hint="@string/student_email"
         android:textSize="24sp" />
 
     <LinearLayout
@@ -40,12 +41,13 @@
             android:layout_weight="1"
             android:text="@string/save"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/btnClear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="30dp"
+            android:layout_weight="1"
             android:text="@string/clear"
             android:textSize="20sp" />
     </LinearLayout>
